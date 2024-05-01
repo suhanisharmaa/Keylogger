@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keylogger</title>
+    <style>
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20vh;
+        }
+        .button-container{
+            display: flex;
+        }
+        #log, #state{
+            background-color: yellow;
+            width: 500px;
+            height: 80px;
+            margin: 8px;
+        }
+        button{
+            margin: 5px;
+            cursor: pointer;
+            width: 150px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="border: 2px solid black;">Keylogger</h1>
+        <div class="button-container">
+            <button id="startbtn">Start Keylogging</button>
+            <button id="stopbtn">Stop Keylogging</button>
+        </div>
+        <div class="button-container">
+            <div id="log"></div>
+            <div id="state"></div>
+        </div>
+    </div>
+
+    <script>
+        const startbtn = document.getElementById("startbtn");
+        const stopbtn = document.getElementById("stopbtn");
+        const log = document.getElementById("log");
+        const state = document.getElementById("state");
+
+        startbtn.addEventListener("click",()=>{
+            document.addEventListener("keydown",handleDown);
+            document.addEventListener("keyup",handleUp);
+            startbtn.disable = true;
+            stopbtn.disable = false;
+        })
+        stopbtn.addEventListener("click",()=>{
+            document.removeEventListener("keydown",handleDown);
+            document.removeEventListener("keyup",handleUp);
+            log.innerHTML = "";
+            state.innerHTML = "";
+            startbtn.disable = false;
+            stopbtn.disable = true;
+        })
+
+        function handleDown(e){
+            log.innerHTML = `Key ${e.key} is pressed down`
+            state.innerHTML = `Key is down`
+        }
+        function handleUp(e){
+            log.innerHTML = `Key ${e.key} is released`
+            state.innerHTML = `Key is released`
+        }
+
+    </script>
+</body>
+</html>
